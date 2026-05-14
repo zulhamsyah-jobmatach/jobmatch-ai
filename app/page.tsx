@@ -482,10 +482,12 @@ export default function JobMatchLanding() {
               </ul>
 
               <div className="flex gap-3 mt-5">
-                {['twitter', 'linkedin', 'instagram'].map((social) => (
+                {['linkedin', 'instagram'].map((social) => (
                   <a
                     key={social}
-                    href="#"
+                    href={social === 'linkedin' ? 'https://www.linkedin.com/in/zulham-syah-b5a2ba40a' : 'https://instagram.com/zulhamsyh_'}
+        target="_blank"
+        rel="noopener noreferrer"
                     className="w-9 h-9 rounded-lg bg-gray-800 hover:bg-gradient-to-br hover:from-indigo-500 hover:to-pink-500 flex items-center justify-center transition"
                     aria-label={social}
                   >
