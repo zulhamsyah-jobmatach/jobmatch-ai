@@ -227,7 +227,10 @@ export default function JobMatchLanding() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
-            <button className="group px-8 py-4 rounded-full bg-white text-indigo-600 font-bold text-lg shadow-2xl shadow-pink-900/30 hover:scale-105 transition-all duration-300 flex items-center gap-2">
+            <button
+              onClick={openModal}
+              className="group px-8 py-4 rounded-full bg-white text-indigo-600 font-bold text-lg shadow-2xl shadow-pink-900/30 hover:scale-105 transition-all duration-300 flex items-center gap-2"
+            >
               Coba Gratis Sekarang
               <svg className="w-5 h-5 group-hover:translate-x-1 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17 8l4 4m0 0l-4 4m4-4H3" />
