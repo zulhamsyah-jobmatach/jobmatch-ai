@@ -417,6 +417,7 @@ export default function JobMatchLanding() {
                 </div>
 
                 <button
+                  onClick={openModal}
                   className={`w-full py-3 rounded-xl font-semibold mb-8 transition ${
                     plan.highlight
                       ? 'bg-white text-indigo-600 hover:bg-gray-100'
