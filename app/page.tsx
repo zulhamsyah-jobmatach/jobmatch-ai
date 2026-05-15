@@ -461,7 +461,10 @@ export default function JobMatchLanding() {
             <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
               Bergabung dengan ribuan profesional yang sudah merasakan kekuatan AI dalam mencari pekerjaan.
             </p>
-            <button className="px-10 py-4 rounded-full bg-white text-indigo-600 font-bold text-lg shadow-2xl hover:scale-105 transition">
+            <button
+              onClick={openModal}
+              className="px-10 py-4 rounded-full bg-white text-indigo-600 font-bold text-lg shadow-2xl hover:scale-105 transition"
+            >
               Mulai Gratis Sekarang
             </button>
           </div>
