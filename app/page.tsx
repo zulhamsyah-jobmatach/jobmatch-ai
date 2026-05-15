@@ -555,6 +555,147 @@ export default function JobMatchLanding() {
         </div>
       </footer>
 
+      {/* Registration Modal */}
+      {isModalOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/60 backdrop-blur-sm"
+          onClick={closeModal}
+        >
+          <div
+            className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={closeModal}
+              aria-label="Tutup"
+              className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-white/80 hover:bg-gray-100 flex items-center justify-center text-gray-600 transition"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {!isSubmitted ? (
+              <>
+                <div className="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 px-8 pt-8 pb-12 text-center relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+                  <div className="absolute bottom-0 left-0 w-32 h-32 bg-pink-300/20 rounded-full blur-2xl"></div>
+                  <div className="relative">
+                    <div className="inline-flex w-14 h-14 rounded-2xl bg-white/20 backdrop-blur-md items-center justify-center mb-3">
+                      <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                      </svg>
+                    </div>
+                    <h3 className="text-2xl font-bold text-white">Daftar Gratis</h3>
+                    <p className="text-white/80 text-sm mt-1">
+                      Mulai perjalanan karir impianmu hari ini
+                    </p>
+                  </div>
+                </div>
+
+                <form onSubmit={handleSubmit} className="px-8 py-6 -mt-6 relative">
+                  <div className="bg-white rounded-2xl p-6 shadow-lg space-y-4">
+                    <div>
+                      <label htmlFor="nama" className="block text-sm font-semibold text-gray-700 mb-1.5">
+                        Nama Lengkap
+                      </label>
+                      <input
+                        id="nama"
+                        name="nama"
+                        type="text"
+                        required
+                        value={formData.nama}
+                        onChange={handleChange}
+                        placeholder="Masukkan nama lengkap"
+                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none transition text-sm text-gray-900 placeholder-gray-400"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-1.5">
+                        Email
+                      </label>
+                      <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="email@example.com"
+                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none transition text-sm text-gray-900 placeholder-gray-400"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="whatsapp" className="block text-sm font-semibold text-gray-700 mb-1.5">
+                        Nomor WhatsApp
+                      </label>
+                      <input
+                        id="whatsapp"
+                        name="whatsapp"
+                        type="tel"
+                        required
+                        value={formData.whatsapp}
+                        onChange={handleChange}
+                        placeholder="+62 812-3456-7890"
+                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none transition text-sm text-gray-900 placeholder-gray-400"
+                      />
+                    </div>
+
+                    <div>
+                      <label htmlFor="role" className="block text-sm font-semibold text-gray-700 mb-1.5">
+                        Saya adalah
+                      </label>
+                      <select
+                        id="role"
+                        name="role"
+                        value={formData.role}
+                        onChange={handleChange}
+                        className="w-full px-4 py-2.5 rounded-xl border border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 outline-none transition text-sm text-gray-900 bg-white"
+                      >
+                        <option value="pencari-kerja">Pencari Kerja</option>
+                        <option value="perusahaan">Perusahaan</option>
+                      </select>
+                    </div>
+
+                    <button
+                      type="submit"
+                      className="w-full mt-2 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-pink-500 text-white font-bold text-sm hover:shadow-lg hover:shadow-pink-500/30 hover:scale-[1.02] transition-all"
+                    >
+                      Daftar Sekarang
+                    </button>
+
+                    <p className="text-xs text-gray-500 text-center pt-1">
+                      Dengan mendaftar, kamu menyetujui Syarat & Ketentuan kami.
+                    </p>
+                  </div>
+                </form>
+              </>
+            ) : (
+              <div className="px-8 py-12 text-center">
+                <div className="inline-flex w-20 h-20 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 items-center justify-center mb-5 shadow-lg shadow-emerald-200">
+                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2">
+                  Pendaftaran Berhasil!
+                </h3>
+                <p className="text-gray-600 text-sm leading-relaxed mb-6 max-w-sm mx-auto">
+                  Terima kasih sudah mendaftar, <span className="font-semibold text-indigo-600">{formData.nama || 'teman'}</span>! Tim kami akan menghubungi kamu via WhatsApp dalam 1×24 jam.
+                </p>
+                <button
+                  onClick={closeModal}
+                  className="px-8 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-pink-500 text-white font-semibold text-sm hover:shadow-lg transition-all"
+                >
+                  Tutup
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
       <a
         href="https://wa.me/6282145023630"
         target="_blank"
