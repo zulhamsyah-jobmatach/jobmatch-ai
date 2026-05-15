@@ -1,36 +1,121 @@
 import Groq from 'groq-sdk';
 import { NextResponse } from 'next/server';
 
-// Bikin instance Groq dengan API key dari .env.local
 const groq = new Groq({
   apiKey: process.env.GROQ_API_KEY,
 });
 
-// Function untuk handle GET request
+// CV dummy untuk testing - nanti ini akan diganti dengan CV asli dari user
+const dummyCvText = `
+Nama: Zulhamsyah
+Pendidikan: S1 Manajemen, Universitas Indonesia (2024)
+IPK: 3.45
+
+Pengalaman:
+- Magang di perusahaan startup teknologi sebagai Content Writer (3 bulan)
+- Project akhir: Penelitian tentang strategi marketing digital UMKM
+- Aktif di organisasi kampus sebagai Ketua Divisi Public Relations
+
+Skills:
+- Microsoft Office (Word, Excel, PowerPoint)
+- Content writing dan copywriting
+- Komunikasi interpersonal
+- Bahasa Inggris (intermediate)
+- Media sosial management
+- Public speaking
+
+Sertifikat:
+- Digital Marketing Fundamentals (Google)
+- Public Speaking Workshop
+
+Bahasa: Indonesia (Native), English (Intermediate)
+`;
+
+const careerDiscoveryPrompt = `ROLE:
+Kamu adalah Career Coach profesional berpengalaman 15 tahun, dengan spesialisasi membantu fresh graduate dan career switcher di Indonesia dan Malaysia menemukan jalur karir yang sesuai dengan potensi mereka.
+
+CONTEXT:
+User yang kamu hadapi biasanya:
+- Fresh graduate yang bingung mau kerja di bidang apa
+- Mereka sering ngerasa minder karena kurang pengalaman
+- Mereka takut salah pilih karir
+- Mereka butuh dukungan, bukan kritik
+
+INPUT - CV USER:
+${dummyCvText}
+
+TASK:
+Analisa CV di atas dan berikan rekomendasi 3 (tiga) jalur karir yang paling cocok. Untuk setiap rekomendasi, jelaskan:
+1. Nama bidang karir (spesifik, bukan umum)
+2. Kenapa cocok berdasarkan CV mereka (sebutkan kekuatan spesifik)
+3. Roadmap singkat 3 langkah untuk mulai di bidang ini
+4. Tingkat kesesuaian (skala 1-10) dengan penjelasan
+
+OUTPUT FORMAT:
+Balas HANYA dalam format JSON valid berikut, tanpa markdown atau teks tambahan apa pun:
+
+{
+  "summary": "Ringkasan singkat tentang kekuatan utama user (2 kalimat)",
+  "recommendations": [
+    {
+      "career": "nama bidang karir",
+      "match_score": 9,
+      "why_match": "alasan spesifik kenapa cocok berdasarkan CV",
+      "roadmap": [
+        "langkah pertama yang konkret",
+        "langkah kedua",
+        "langkah ketiga"
+      ]
+    }
+  ],
+  "encouragement": "Pesan singkat yang membangun confidence user (1-2 kalimat)"
+}
+
+CONSTRAINTS:
+- Gunakan Bahasa Indonesia yang ramah dan supportif
+- JANGAN gunakan istilah teknis yang membingungkan
+- Hindari kata-kata yang membuat user merasa minder
+- Roadmap harus konkret dan actionable
+- Match score harus realistis (jangan semuanya 10)
+- Total recommendations: 3 (tidak kurang, tidak lebih)
+
+TONE:
+Supportif, hangat, dan membangun confidence. Bayangkan kamu lagi ngobrol dengan teman dekat yang lagi bingung pilih karir.`;
+
 export async function GET() {
   try {
-    // Panggil Groq AI dengan pertanyaan test
     const chatCompletion = await groq.chat.completions.create({
       messages: [
         {
           role: 'user',
-          content: 'Halo! Tolong perkenalkan dirimu dalam 2 kalimat dalam Bahasa Indonesia.',
+          content: careerDiscoveryPrompt,
         },
       ],
       model: 'llama-3.3-70b-versatile',
+      temperature: 0.7,
+      response_format: { type: 'json_object' },
     });
 
-    // Ambil response AI
-    const aiResponse = chatCompletion.choices[0]?.message?.content || 'Tidak ada response';
+    const aiResponse = chatCompletion.choices[0]?.message?.content || '{}';
 
-    // Balikkan response ke browser
+    let parsedResponse;
+    try {
+      parsedResponse = JSON.parse(aiResponse);
+    } catch (parseError) {
+      return NextResponse.json({
+        success: false,
+        error: 'AI response bukan JSON valid',
+        raw_response: aiResponse,
+      });
+    }
+
     return NextResponse.json({
       success: true,
-      message: 'Groq API berhasil dipanggil!',
-      ai_response: aiResponse,
+      message: 'Career Discovery berhasil!',
+      cv_analyzed: 'Zulhamsyah (CV Dummy)',
+      result: parsedResponse,
     });
   } catch (error) {
-    // Kalau ada error, balikkan info error
     console.error('Error calling Groq:', error);
     return NextResponse.json(
       {
