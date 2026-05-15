@@ -8,27 +8,64 @@ const groq = new Groq({
 // CV dummy untuk testing - nanti ini akan diganti dengan CV asli dari user
 const dummyCvText = `
 Nama: Zulhamsyah
-Pendidikan: S1 Manajemen, Universitas Indonesia (2024)
-IPK: 3.45
 
-Pengalaman:
-- Magang di perusahaan startup teknologi sebagai Content Writer (3 bulan)
-- Project akhir: Penelitian tentang strategi marketing digital UMKM
-- Aktif di organisasi kampus sebagai Ketua Divisi Public Relations
+Pendidikan:
+- Universitas Terbuka (UT) Layanan Luar Negeri Kuala Lumpur
+- Jurusan: Sistem Informasi
+- Status: Sedang berjalan (Semester 6)
 
-Skills:
-- Microsoft Office (Word, Excel, PowerPoint)
-- Content writing dan copywriting
-- Komunikasi interpersonal
-- Bahasa Inggris (intermediate)
-- Media sosial management
-- Public speaking
+Pengalaman Kerja:
+1. Shell Malaysia (saat ini, 3 tahun)
+   - Posisi: Staff Pam Bensin & Cashier
+   - Lingkungan kerja multinasional
+   - Customer service & operational support
 
-Sertifikat:
-- Digital Marketing Fundamentals (Google)
-- Public Speaking Workshop
+2. Kedai Yong Tou Fu, Malaysia (6 bulan)
+   - Adaptasi awal bekerja di Malaysia
+   - F&B service & customer interaction
 
-Bahasa: Indonesia (Native), English (Intermediate)
+3. Industri Perkapalan, Indonesia (1.5 tahun)
+   - Posisi: Welder
+   - Spesialisasi: welding jangkar dan komponen kapal
+   - Pengalaman heavy industry
+
+Skills Teknis:
+- Microsoft Office (basic)
+- Welding (kapal & jangkar)
+- Customer service & cashiering
+- Operational support
+
+Bahasa:
+- Indonesia (Native)
+- Melayu (Fluent, hasil 3+ tahun di Malaysia)
+- English (Basic conversational)
+- Chinese/Mandarin (Basic)
+
+Soft Skills:
+- Leadership
+- Communication & multicultural teamwork
+- Adaptability (Indonesia ke Malaysia, 3 negara budaya)
+- Customer-facing experience
+- Cross-cultural communication
+
+Sedang Belajar:
+- Web Development (Next.js, React, TypeScript)
+- Financial literacy & cryptocurrency
+- Building digital products
+- Sistem Informasi (kuliah)
+
+Minat & Goals:
+- Membangun usaha digital sendiri (startup)
+- Financial independence & wealth building
+- Filantropi: membangun yayasan untuk orang tua
+- Cross-border opportunity Indonesia-Malaysia
+
+Pengalaman Hidup yang Unik:
+- 3+ tahun bekerja & tinggal di Malaysia
+- Switched dari heavy industry (welding) ke service industry (Shell)
+- Sedang transition ke tech & finance
+- Multilingual (4 bahasa)
+- Multicultural exposure (Indonesia, Malaysia, Tionghoa)
 `;
 
 const careerDiscoveryPrompt = `ROLE:
