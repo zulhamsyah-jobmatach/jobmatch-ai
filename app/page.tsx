@@ -193,7 +193,10 @@ export default function JobMatchLanding() {
             <a href="#pricing" className="hover:text-indigo-600 transition">Harga</a>
             <a href="#contact" className="hover:text-indigo-600 transition">Kontak</a>
           </div>
-          <button className="px-5 py-2.5 rounded-full bg-gradient-to-r from-indigo-600 to-pink-500 text-white text-sm font-semibold hover:shadow-lg hover:shadow-pink-500/30 transition-all">
+          <button
+            onClick={openModal}
+            className="px-5 py-2.5 rounded-full bg-gradient-to-r from-indigo-600 to-pink-500 text-white text-sm font-semibold hover:shadow-lg hover:shadow-pink-500/30 transition-all"
+          >
             Daftar Gratis
           </button>
         </div>
