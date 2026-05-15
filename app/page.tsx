@@ -4,6 +4,48 @@ import { useState } from 'react';
 
 export default function JobMatchLanding() {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [formData, setFormData] = useState({
+    nama: '',
+    email: '',
+    whatsapp: '',
+    role: 'pencari-kerja',
+  });
+
+  const openModal = () => {
+    setIsSubmitted(false);
+    setFormData({ nama: '', email: '', whatsapp: '', role: 'pencari-kerja' });
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const newRegistration = {
+      ...formData,
+      registeredAt: new Date().toISOString(),
+    };
+
+    try {
+      const existing = localStorage.getItem('jobmatch_registrations');
+      const registrations = existing ? JSON.parse(existing) : [];
+      registrations.push(newRegistration);
+      localStorage.setItem('jobmatch_registrations', JSON.stringify(registrations));
+    } catch (err) {
+      console.error('Gagal menyimpan ke localStorage:', err);
+    }
+
+    setIsSubmitted(true);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const steps = [
     {
