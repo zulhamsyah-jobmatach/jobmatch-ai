@@ -48,12 +48,44 @@ export default function ResultPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-pink-50 py-12 px-6">
       <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          Hasil Analisis Karir Kamu
-        </h1>
-        <p className="text-gray-600 mb-8">
-          AI sudah menganalisis CV kamu. Berikut rekomendasinya:
-        </p>
+        {/* Header with breadcrumb and action */}
+        <div className="flex items-center justify-between mb-8">
+          <a
+            href="/"
+            className="flex items-center gap-2 text-sm text-gray-600 hover:text-indigo-600 transition"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            Kembali ke Beranda
+          </a>
+          <button
+            onClick={() => window.location.reload()}
+            className="flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-indigo-200 text-indigo-600 text-sm font-semibold hover:bg-indigo-50 transition"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            Analisis Lagi
+          </button>
+        </div>
+
+        {/* Main heading */}
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-4 rounded-full bg-indigo-100 text-indigo-700 text-sm font-semibold">
+            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+            Analisis Selesai
+          </div>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+            Hasil Analisis{' '}
+            <span className="bg-gradient-to-r from-indigo-600 to-pink-500 bg-clip-text text-transparent">
+              Karir Kamu
+            </span>
+          </h1>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            AI sudah menganalisis CV kamu dan menemukan jalur karir yang paling cocok berdasarkan keahlian dan minatmu.
+          </p>
+        </div>
 
         {/* Kondisi 1: Lagi loading */}
         {loading && (
