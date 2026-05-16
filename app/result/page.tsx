@@ -141,38 +141,161 @@ export default function ResultPage() {
               </div>
             </div>
 
-            {/* Recommendations */}
-            <div className="bg-white rounded-2xl p-8 shadow-lg">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">
-                🎯 Rekomendasi Karir
-              </h2>
-              <div className="space-y-4">
-                {data.recommendations.map((rec, index) => (
-                  <div
-                    key={index}
-                    className="border border-gray-200 rounded-xl p-5"
-                  >
-                    <div className="flex justify-between items-center mb-2">
-                      <h3 className="text-lg font-bold text-gray-900">
-                        {rec.career}
-                      </h3>
-                      <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full text-sm font-semibold">
-                        {rec.match_score}/10
-                      </span>
+            {/* Recommendations Section */}
+            <div>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-600 to-pink-500 flex items-center justify-center shadow-md">
+                  <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div>
+                  <div className="text-xs font-bold tracking-widest text-indigo-600">REKOMENDASI</div>
+                  <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900">
+                    Karir yang Cocok Untukmu
+                  </h2>
+                </div>
+              </div>
+
+              <div className="space-y-5 pt-4">
+                {data.recommendations.map((rec, index) => {
+                  const isTop = index === 0;
+                  return (
+                    <div
+                      key={index}
+                      className={`relative rounded-3xl p-6 md:p-8 overflow-hidden transition-all duration-300 hover:-translate-y-1 ${
+                        isTop
+                          ? 'bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 text-white shadow-2xl shadow-pink-200'
+                          : 'bg-white border border-gray-100 shadow-md hover:shadow-xl'
+                      }`}
+                    >
+                      {isTop && (
+                        <>
+                          <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+                          <div className="absolute bottom-0 left-0 w-48 h-48 bg-yellow-300/20 rounded-full blur-3xl -ml-24 -mb-24"></div>
+                          <div className="relative inline-flex items-center gap-1.5 mb-5 px-4 py-1.5 rounded-full bg-yellow-300 text-indigo-900 text-xs font-bold shadow-lg">
+                            🏆 PALING COCOK UNTUKMU
+                          </div>
+                        </>
+                      )}
+
+                      <div className="relative">
+                        <div className="flex items-start justify-between gap-4 mb-4">
+                          <div className="flex items-start gap-4 flex-1">
+                            <div
+                              className={`flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg ${
+                                isTop
+                                  ? 'bg-white/20 backdrop-blur-md'
+                                  : 'bg-gradient-to-br from-indigo-100 to-pink-100'
+                              }`}
+                            >
+                              <span className="text-2xl">
+                                {index === 0 ? '🚀' : index === 1 ? '💼' : '🎯'}
+                              </span>
+                            </div>
+                            <div className="flex-1 pt-1">
+                              <div
+                                className={`text-xs font-bold tracking-wider mb-1 ${
+                                  isTop ? 'text-yellow-200' : 'text-indigo-600'
+                                }`}
+                              >
+                                REKOMENDASI #{index + 1}
+                              </div>
+                              <h3
+                                className={`text-xl md:text-2xl font-extrabold ${
+                                  isTop ? 'text-white' : 'text-gray-900'
+                                }`}
+                              >
+                                {rec.career}
+                              </h3>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Match Score Progress Bar */}
+                        <div className="mb-5">
+                          <div className="flex items-center justify-between mb-2">
+                            <span
+                              className={`text-sm font-semibold ${
+                                isTop ? 'text-white/90' : 'text-gray-700'
+                              }`}
+                            >
+                              Tingkat Kesesuaian
+                            </span>
+                            <span
+                              className={`text-lg font-extrabold ${
+                                isTop ? 'text-yellow-200' : 'text-indigo-600'
+                              }`}
+                            >
+                              {rec.match_score}/10
+                            </span>
+                          </div>
+                          <div
+                            className={`h-2.5 rounded-full overflow-hidden ${
+                              isTop ? 'bg-white/20' : 'bg-gray-100'
+                            }`}
+                          >
+                            <div
+                              className={`h-full rounded-full transition-all duration-1000 ${
+                                isTop
+                                  ? 'bg-gradient-to-r from-yellow-300 to-yellow-200'
+                                  : 'bg-gradient-to-r from-indigo-500 to-pink-500'
+                              }`}
+                              style={{ width: `${rec.match_score * 10}%` }}
+                            ></div>
+                          </div>
+                        </div>
+
+                        <p
+                          className={`leading-relaxed mb-6 ${
+                            isTop ? 'text-white/90' : 'text-gray-600'
+                          }`}
+                        >
+                          {rec.why_match}
+                        </p>
+
+                        {/* Roadmap */}
+                        <div
+                          className={`rounded-2xl p-5 ${
+                            isTop
+                              ? 'bg-white/10 backdrop-blur-sm border border-white/20'
+                              : 'bg-gradient-to-br from-gray-50 to-indigo-50/30 border border-gray-100'
+                          }`}
+                        >
+                          <div
+                            className={`text-xs font-bold tracking-widest mb-4 ${
+                              isTop ? 'text-yellow-200' : 'text-indigo-600'
+                            }`}
+                          >
+                            📋 ROADMAP UNTUK MEMULAI
+                          </div>
+                          <div className="space-y-3">
+                            {rec.roadmap.map((step, i) => (
+                              <div key={i} className="flex items-start gap-3">
+                                <div
+                                  className={`flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold ${
+                                    isTop
+                                      ? 'bg-yellow-300 text-indigo-900'
+                                      : 'bg-gradient-to-br from-indigo-600 to-pink-500 text-white'
+                                  }`}
+                                >
+                                  {i + 1}
+                                </div>
+                                <p
+                                  className={`text-sm leading-relaxed pt-0.5 ${
+                                    isTop ? 'text-white' : 'text-gray-700'
+                                  }`}
+                                >
+                                  {step}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <p className="text-gray-600 mb-3">{rec.why_match}</p>
-                    <div className="bg-gray-50 rounded-lg p-3">
-                      <p className="text-sm font-semibold text-gray-700 mb-2">
-                        Langkah-langkah:
-                      </p>
-                      <ol className="list-decimal list-inside text-sm text-gray-600 space-y-1">
-                        {rec.roadmap.map((step, i) => (
-                          <li key={i}>{step}</li>
-                        ))}
-                      </ol>
-                    </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
 
