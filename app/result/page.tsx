@@ -300,9 +300,100 @@ export default function ResultPage() {
             </div>
 
             {/* Encouragement */}
-            <div className="bg-gradient-to-r from-indigo-600 to-pink-500 rounded-2xl p-8 shadow-lg text-white">
-              <h2 className="text-xl font-bold mb-3">💪 Pesan untukmu</h2>
-              <p className="leading-relaxed">{data.encouragement}</p>
+            <div className="relative overflow-hidden rounded-3xl shadow-2xl shadow-pink-200">
+              {/* Gradient background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500"></div>
+
+              {/* Decorative blobs */}
+              <div className="absolute top-0 right-0 w-72 h-72 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-yellow-300/20 rounded-full blur-3xl -ml-24 -mb-24"></div>
+
+              {/* Content */}
+              <div className="relative p-8 md:p-12 text-white text-center">
+                <div className="inline-flex items-center gap-2 mb-5 px-4 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-xs font-bold tracking-widest">
+                  💛 PESAN UNTUKMU
+                </div>
+
+                <div className="relative max-w-2xl mx-auto">
+                  <svg className="absolute -top-4 -left-4 w-10 h-10 text-yellow-300/40" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                  </svg>
+                  <p className="text-xl md:text-2xl font-medium leading-relaxed italic mb-4">
+                    {data.encouragement}
+                  </p>
+                </div>
+
+                <div className="mt-6 inline-flex items-center gap-2 text-sm text-white/80">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2L9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2z" />
+                  </svg>
+                  <span className="font-semibold">Career Discovery powered by AI</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer CTA Section */}
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Coba lagi */}
+              <button
+                onClick={() => window.location.reload()}
+                className="group relative overflow-hidden rounded-2xl p-6 bg-white border-2 border-indigo-100 hover:border-indigo-400 hover:shadow-xl transition-all"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600 to-pink-500 flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                  </div>
+                  <div className="text-left">
+                    <h3 className="font-bold text-gray-900 mb-0.5">Coba CV Lain</h3>
+                    <p className="text-sm text-gray-500">Analisis ulang dengan profil berbeda</p>
+                  </div>
+                </div>
+              </button>
+
+              {/* Bagikan */}
+              <button
+                onClick={() => {
+                  if (navigator.share) {
+                    navigator.share({
+                      title: 'JobMatch AI - Career Discovery',
+                      text: 'Coba JobMatch AI, AI yang bantu kamu nemuin karir yang cocok!',
+                      url: window.location.origin,
+                    });
+                  } else {
+                    navigator.clipboard.writeText(window.location.origin);
+                    alert('Link berhasil dicopy!');
+                  }
+                }}
+                className="group relative overflow-hidden rounded-2xl p-6 bg-gradient-to-br from-indigo-600 to-pink-500 hover:shadow-xl transition-all text-white"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                    </svg>
+                  </div>
+                  <div className="text-left">
+                    <h3 className="font-bold mb-0.5">Bagikan ke Teman</h3>
+                    <p className="text-sm text-white/80">Bantu teman temukan karirnya</p>
+                  </div>
+                </div>
+              </button>
+            </div>
+
+            {/* Branding Footer */}
+            <div className="mt-12 text-center pb-8">
+              <div className="inline-flex items-center gap-2 text-sm text-gray-500">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-600 to-pink-500 flex items-center justify-center">
+                  <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <span className="font-semibold text-gray-700">JobMatch AI</span>
+                <span>—</span>
+                <span>Career Discovery untuk Indonesia & Malaysia</span>
+              </div>
             </div>
           </div>
         )}
