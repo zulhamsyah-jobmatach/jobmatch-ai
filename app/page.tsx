@@ -1,8 +1,11 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
+
 import { useState } from 'react';
 
 export default function JobMatchLanding() {
+  const router = useRouter();
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('monthly');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -14,9 +17,7 @@ export default function JobMatchLanding() {
   });
 
   const openModal = () => {
-    setIsSubmitted(false);
-    setFormData({ nama: '', email: '', whatsapp: '', role: 'pencari-kerja' });
-    setIsModalOpen(true);
+    router.push('/upload');
   };
 
   const closeModal = () => {
