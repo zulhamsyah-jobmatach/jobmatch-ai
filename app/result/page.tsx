@@ -24,26 +24,24 @@ export default function ResultPage() {
 
   // useEffect: jalan otomatis saat halaman pertama dibuka
   useEffect(() => {
-    async function fetchAIData() {
-      try {
-        setLoading(true);
-        const response = await fetch('/api/test-groq');
-        const json = await response.json();
+    // Ambil data dari sessionStorage (disimpan saat upload)
+    const storedResult = sessionStorage.getItem('cvAnalysisResult');
 
-        if (json.success && json.result) {
-          setData(json.result);
-        } else {
-          setError(json.error || 'Terjadi kesalahan');
-        }
+    if (storedResult) {
+      try {
+        const parsedResult = JSON.parse(storedResult);
+        setData(parsedResult);
+        setLoading(false);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Network error');
-      } finally {
+        setError('Data hasil tidak valid');
         setLoading(false);
       }
+    } else {
+      // Kalau nggak ada data, redirect ke upload
+      setError('Belum ada CV yang dianalisis. Silakan upload CV dulu.');
+      setLoading(false);
     }
-
-    fetchAIData();
-  }, []); // [] berarti useEffect hanya jalan 1 kali
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-pink-50 py-12 px-6">
