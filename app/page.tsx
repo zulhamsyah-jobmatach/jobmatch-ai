@@ -52,7 +52,7 @@ export default function JobMatchLanding() {
     {
       number: '01',
       title: 'Upload CV',
-      desc: 'Upload CV kamu dalam format PDF, DOC, atau DOCX. Cukup drag & drop, selesai dalam hitungan detik.',
+      desc: 'Upload CV kamu dalam format PDF. Cukup drag & drop, selesai dalam hitungan detik.',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
@@ -71,8 +71,8 @@ export default function JobMatchLanding() {
     },
     {
       number: '03',
-      title: 'Dapat Kerja',
-      desc: 'Dapatkan rekomendasi pekerjaan terbaik yang sesuai dengan profil kamu, lengkap dengan tips untuk apply.',
+      title: 'Dapat Rekomendasi',
+      desc: 'Dapatkan 3 rekomendasi karir yang cocok dengan profil kamu, lengkap dengan roadmap untuk memulai.',
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
