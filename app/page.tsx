@@ -214,18 +214,18 @@ export default function JobMatchLanding() {
         <div className="relative max-w-7xl mx-auto px-6 text-center">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-6 rounded-full bg-white/15 backdrop-blur-md border border-white/20 text-white text-sm font-medium">
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-            Dipercaya 50.000+ pencari kerja di Indonesia
+            🔬 Beta - Bantu Kami Improve!
           </div>
 
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight tracking-tight mb-6">
-            Temukan Pekerjaan<br />
+            Temukan Karir<br />
             <span className="bg-gradient-to-r from-yellow-200 via-pink-200 to-white bg-clip-text text-transparent">
-              Impianmu dengan AI
+              yang Tepat dengan AI
             </span>
           </h1>
 
           <p className="max-w-2xl mx-auto text-lg md:text-xl text-white/90 mb-10 leading-relaxed">
-            Upload CV kamu, AI kami akan mencocokkan dengan pekerjaan terbaik dalam 2 menit.
+            Upload CV kamu, AI kami akan kasih rekomendasi karir + roadmap dalam hitungan detik.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
