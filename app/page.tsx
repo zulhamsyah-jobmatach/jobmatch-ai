@@ -126,8 +126,9 @@ export default function JobMatchLanding() {
 
   const plans = [
     {
-      name: 'Starter',
-      price: 'Gratis',
+         name: 'Starter',
+    price: 'Gratis',
+    priceYearly: 'Upgrade ke Pro setelah 5 CV',
       period: '',
       desc: 'Mulai gratis, cocok untuk eksplorasi karir.',
       features: [
@@ -142,7 +143,8 @@ export default function JobMatchLanding() {
     },
     {
       name: 'Professional',
-      price: 'Rp 49.000',
+    price: 'Rp 49.000',
+    priceYearly: 'Rp 39.000',
       period: '/bulan',
       desc: 'Untuk pencari karir serius yang butuh insight mendalam.',
       features: [
@@ -160,7 +162,8 @@ export default function JobMatchLanding() {
     },
     {
       name: 'Enterprise',
-      price: 'Custom',
+    price: 'Custom',
+    priceYearly: 'Custom',
       period: '',
       desc: 'Untuk organisasi, universitas, dan tim besar.',
       features: [
@@ -413,24 +416,45 @@ export default function JobMatchLanding() {
                 </p>
 
                 <div className="mb-6">
-                  <span className={`text-4xl font-extrabold ${plan.highlight ? 'text-white' : 'text-gray-900'}`}>
-                    {plan.price}
-                  </span>
-                  <span className={`text-sm ${plan.highlight ? 'text-white/80' : 'text-gray-500'}`}>
-                    {plan.period}
-                  </span>
-                </div>
+              <span className={`font-extrabold ${
+                billingCycle === 'yearly' && plan.priceYearly && plan.priceYearly.length > 10
+                  ? 'text-xl md:text-2xl'
+                  : 'text-4xl'
+              } ${plan.highlight ? 'text-white' : 'text-gray-900'}`}>
+                {billingCycle === 'yearly' ? plan.priceYearly : plan.price}
+              </span>
+              {plan.name === 'Professional' && (
+                <span className={`text-sm ${plan.highlight ? 'text-blue-100' : 'text-gray-600'}`}>
+                  {plan.period}
+                </span>
+              )}
+            </div>
 
-                <button
-                  onClick={openModal}
-                  className={`w-full py-3 rounded-xl font-semibold mb-8 transition ${
+                {plan.name === 'Enterprise' ? (
+                <a
+                  href="https://wa.me/6282145023630?text=Halo%20Kak%20Zulhamsyah%2C%20saya%20tertarik%20dengan%20paket%20Enterprise%20JobMatch%20AI"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`w-full py-3 rounded-xl font-semibold text-center block ${
                     plan.highlight
                       ? 'bg-white text-indigo-600 hover:bg-gray-100'
-                      : 'bg-gradient-to-r from-indigo-600 to-pink-500 text-white hover:shadow-lg'
+                      : 'bg-gradient-to-r from-indigo-600 to-pink-600 text-white hover:opacity-90'
+                  }`}
+                >
+                  {plan.cta}
+                </a>
+              ) : (
+                <button
+                  onClick={openModal}
+                  className={`w-full py-3 rounded-xl font-semibold ${
+                    plan.highlight
+                      ? 'bg-white text-indigo-600 hover:bg-gray-100'
+                      : 'bg-gradient-to-r from-indigo-600 to-pink-600 text-white hover:opacity-90'
                   }`}
                 >
                   {plan.cta}
                 </button>
+              )}
 
                 <ul className="space-y-3">
                   {plan.features.map((feat, j) => (
