@@ -199,7 +199,7 @@ export default function JobMatchLanding() {
             onClick={openModal}
             className="px-5 py-2.5 rounded-full bg-gradient-to-r from-indigo-600 to-pink-500 text-white text-sm font-semibold hover:shadow-lg hover:shadow-pink-500/30 transition-all"
           >
-            Daftar Gratis
+            Coba Gratis
           </button>
         </div>
       </nav>
@@ -599,7 +599,7 @@ export default function JobMatchLanding() {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                       </svg>
                     </div>
-                    <h3 className="text-2xl font-bold text-white">Daftar Gratis</h3>
+                    <h3 className="text-2xl font-bold text-white">Coba Gratis</h3>
                     <p className="text-white/80 text-sm mt-1">
                       Mulai perjalanan karir impianmu hari ini
                     </p>
