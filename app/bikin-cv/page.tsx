@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import CVPreview from '../components/CVPreview';
 
@@ -132,8 +133,38 @@ export default function BikinCVPage() {
   };
 
   // Handler buttons di CVPreview
-  const handleAnalyzeCV = () => {
-    alert('🚧 Coming soon di Milestone 4! Akan integrate dengan career analyzer.');
+  const handleAnalyzeCV = async () => {
+    if (!cvContent) return;
+
+    try {
+      // 1. Call API analyze-cv-text
+      const response = await fetch('/api/analyze-cv-text', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cvText: cvContent }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to analyze CV');
+      }
+
+      const result = await response.json();
+
+      // 2. Validasi hasil
+      if (!result.summary || !result.recommendations) {
+        throw new Error('Invalid AI response');
+      }
+
+      // 3. Save ke sessionStorage (sesuai format result page)
+      sessionStorage.setItem('cvAnalysisResult', JSON.stringify(result));
+
+      // 4. Redirect ke /result
+      window.location.href = '/result';
+    } catch (error) {
+      console.error('Analyze CV error:', error);
+      alert('Gagal menganalisis CV. Coba lagi ya!');
+      throw error; // Re-throw biar CVPreview bisa reset loading state
+    }
   };
 
   const handleEditCV = () => {
