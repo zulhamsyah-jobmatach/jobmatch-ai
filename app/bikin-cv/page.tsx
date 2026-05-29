@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import CVPreview from '../components/CVPreview';
 
 type Message = {
   role: 'user' | 'assistant';
@@ -12,7 +13,7 @@ export default function BikinCVPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const [isCVReady, setIsCVReady] = useState(false);
+  const [cvContent, setCvContent] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -21,9 +22,36 @@ export default function BikinCVPage() {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages, isLoading]);
+  }, [messages, isLoading, cvContent]);
 
-  // Auto-trigger pesan pembuka dari AI saat halaman dibuka
+  // Function untuk extract CV content dari message AI
+  const extractCV = (content: string): { cv: string | null; cleanMessage: string } => {
+    const cvStartIdx = content.indexOf('[CV_START]');
+    const cvEndIdx = content.indexOf('[CV_END]');
+
+    if (cvStartIdx === -1 || cvEndIdx === -1) {
+      return { cv: null, cleanMessage: content };
+    }
+
+    // Extract CV content (tanpa markers)
+    const cv = content.substring(cvStartIdx + '[CV_START]'.length, cvEndIdx).trim();
+
+    // Hapus markers + CV dari message, ganti dengan placeholder
+    const beforeCV = content.substring(0, cvStartIdx).trim();
+    const afterCV = content.substring(cvEndIdx + '[CV_END]'.length).trim();
+
+    const cleanMessage = [beforeCV, afterCV]
+      .filter(Boolean)
+      .join('\n\n')
+      .trim();
+
+    return {
+      cv,
+      cleanMessage: cleanMessage || 'CV kamu udah jadi! Cek preview di bawah ↓',
+    };
+  };
+
+  // Auto-trigger pesan pembuka dari AI
   useEffect(() => {
     const startChat = async () => {
       setIsLoading(true);
@@ -71,13 +99,16 @@ export default function BikinCVPage() {
 
       const data = await response.json();
 
+      // Extract CV jika ada
+      const { cv, cleanMessage } = extractCV(data.message);
+
       setMessages([
         ...newMessages,
-        { role: 'assistant', content: data.message },
+        { role: 'assistant', content: cleanMessage },
       ]);
 
-      if (data.isCVGenerated) {
-        setIsCVReady(true);
+      if (cv) {
+        setCvContent(cv);
       }
     } catch (error) {
       console.error('Send message error:', error);
@@ -98,6 +129,23 @@ export default function BikinCVPage() {
       e.preventDefault();
       handleSend();
     }
+  };
+
+  // Handler buttons di CVPreview
+  const handleAnalyzeCV = () => {
+    alert('🚧 Coming soon di Milestone 4! Akan integrate dengan career analyzer.');
+  };
+
+  const handleEditCV = () => {
+    // Reset CV, lanjut chat untuk revisi
+    setCvContent(null);
+    setMessages([
+      ...messages,
+      {
+        role: 'assistant',
+        content: 'Oke, mau revisi bagian mana? Cerita aja, aku bantu update CV-mu!',
+      },
+    ]);
   };
 
   return (
@@ -172,33 +220,17 @@ export default function BikinCVPage() {
             </div>
           )}
 
+          {/* CV PREVIEW (muncul setelah CV jadi) */}
+          {cvContent && (
+            <CVPreview
+              cvContent={cvContent}
+              onAnalyze={handleAnalyzeCV}
+              onEdit={handleEditCV}
+            />
+          )}
+
           <div ref={messagesEndRef} />
         </div>
-
-        {/* CV READY BANNER */}
-        {isCVReady && (
-          <div className="mt-6 bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-300 rounded-2xl p-4">
-            <div className="flex items-start gap-3">
-              <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0">
-                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              <div className="flex-1">
-                <h3 className="font-bold text-green-900">CV kamu udah jadi! 🎉</h3>
-                <p className="text-sm text-green-700 mt-1">
-                  Lanjut analisis karir cocok berdasarkan CV-mu?
-                </p>
-                <button
-                  className="mt-3 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition"
-                  onClick={() => alert('Coming soon: integration ke career analyzer!')}
-                >
-                  Analisis Karir Sekarang →
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
       </main>
 
       {/* INPUT AREA */}
@@ -209,7 +241,7 @@ export default function BikinCVPage() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Ketik jawaban kamu di sini..."
+              placeholder={cvContent ? 'CV udah jadi! Mau revisi? Ketik di sini...' : 'Ketik jawaban kamu di sini...'}
               rows={1}
               disabled={isLoading}
               className="flex-1 bg-transparent resize-none outline-none px-2 py-2 text-sm text-gray-800 max-h-32 disabled:opacity-50"
