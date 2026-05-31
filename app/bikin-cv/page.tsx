@@ -22,8 +22,15 @@ const inputRef = useRef<HTMLTextAreaElement>(null);
   };
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages, isLoading, cvContent]);
+  scrollToBottom();
+  
+  // iOS: scroll input into view when needed
+  if (inputRef.current) {
+    setTimeout(() => {
+      inputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    }, 300);
+  }
+}, [messages, isLoading, cvContent]);
 // Auto-focus textarea setelah AI selesai balas
   useEffect(() => {
     if (!isLoading) {
@@ -34,6 +41,26 @@ const inputRef = useRef<HTMLTextAreaElement>(null);
       return () => clearTimeout(timer);
     }
   }, [isLoading]);
+
+  // iOS Safari keyboard fix - adjust viewport when keyboard appears
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.visualViewport) {
+        const vh = window.visualViewport.height;
+        document.documentElement.style.setProperty('--vh', `${vh}px`);
+      }
+    };
+
+    handleResize();
+
+    window.visualViewport?.addEventListener('resize', handleResize);
+    window.visualViewport?.addEventListener('scroll', handleResize);
+
+    return () => {
+      window.visualViewport?.removeEventListener('resize', handleResize);
+      window.visualViewport?.removeEventListener('scroll', handleResize);
+    };
+  }, []);
   // Function untuk extract CV content dari message AI
   const extractCV = (content: string): { cv: string | null; cleanMessage: string } => {
     const cvStartIdx = content.indexOf('[CV_START]');
@@ -190,7 +217,7 @@ const inputRef = useRef<HTMLTextAreaElement>(null);
   };
 
   return (
-    <div className="flex flex-col bg-gradient-to-br from-indigo-50 via-white to-pink-50" style={{ height: '100dvh' }}>
+    <div className="flex flex-col bg-gradient-to-br from-indigo-50 via-white to-pink-50" style={{ height: 'var(--vh, 100dvh)' }}>
       {/* HEADER */}
       <header className=" flex-shrink-0 bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
