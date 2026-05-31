@@ -16,7 +16,7 @@ export default function BikinCVPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [cvContent, setCvContent] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-
+const inputRef = useRef<HTMLTextAreaElement>(null);
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -24,7 +24,16 @@ export default function BikinCVPage() {
   useEffect(() => {
     scrollToBottom();
   }, [messages, isLoading, cvContent]);
-
+// Auto-focus textarea setelah AI selesai balas
+  useEffect(() => {
+    if (!isLoading) {
+      // Delay sedikit biar textarea udah enabled
+      const timer = setTimeout(() => {
+        inputRef.current?.focus();
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+  }, [isLoading]);
   // Function untuk extract CV content dari message AI
   const extractCV = (content: string): { cv: string | null; cleanMessage: string } => {
     const cvStartIdx = content.indexOf('[CV_START]');
@@ -76,6 +85,7 @@ export default function BikinCVPage() {
         ]);
       } finally {
         setIsLoading(false);
+        inputRef.current?.focus();
       }
     };
 
@@ -269,6 +279,7 @@ export default function BikinCVPage() {
         <div className="max-w-3xl mx-auto px-4 py-3">
           <div className="flex items-end gap-2 bg-gray-50 rounded-2xl p-2 border border-gray-200 focus-within:border-indigo-400 focus-within:bg-white transition">
             <textarea
+            ref={inputRef}
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
