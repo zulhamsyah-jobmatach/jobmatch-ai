@@ -190,7 +190,7 @@ const inputRef = useRef<HTMLTextAreaElement>(null);
   };
 
   return (
-    <div className="flex flex-col h-screen-safe bg-gradient-to-br from-indigo-50 via-white to-pink-50">
+    <div className="flex flex-col bg-gradient-to-br from-indigo-50 via-white to-pink-50" style={{ height: '100dvh' }}>
       {/* HEADER */}
       <header className=" flex-shrink-0 bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
