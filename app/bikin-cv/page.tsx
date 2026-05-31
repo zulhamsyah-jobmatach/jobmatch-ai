@@ -190,9 +190,9 @@ const inputRef = useRef<HTMLTextAreaElement>(null);
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-pink-50">
+    <div className="flex flex-col h-screen-safe bg-gradient-to-br from-indigo-50 via-white to-pink-50">
       {/* HEADER */}
-      <header className="sticky top-0 z-10 bg-white/80 backdrop-blur-md border-b border-gray-200">
+      <header className=" flex-shrink-0 bg-white/80 backdrop-blur-md border-b border-gray-200">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link
             href="/"
@@ -219,7 +219,8 @@ const inputRef = useRef<HTMLTextAreaElement>(null);
       </header>
 
       {/* CHAT AREA */}
-      <main className="max-w-3xl mx-auto px-4 py-6 pb-32">
+      <main className="flex-1 overflow-y-auto">
+  <div className="max-w-3xl mx-auto px-4 py-6">
         <div className="space-y-4">
           {messages.map((msg, idx) => (
             <div
@@ -272,10 +273,11 @@ const inputRef = useRef<HTMLTextAreaElement>(null);
 
           <div ref={messagesEndRef} />
         </div>
+        </div>
       </main>
 
       {/* INPUT AREA */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-gray-200">
+      <div className="flex-shrink-0 bg-white/95 backdrop-blur-md border-t border-gray-200">
         <div className="max-w-3xl mx-auto px-4 py-3">
           <div className="flex items-end gap-2 bg-gray-50 rounded-2xl p-2 border border-gray-200 focus-within:border-indigo-400 focus-within:bg-white transition">
             <textarea
