@@ -42,23 +42,30 @@ const inputRef = useRef<HTMLTextAreaElement>(null);
     }
   }, [isLoading]);
 
-  // iOS Safari keyboard fix - adjust viewport when keyboard appears
+  // iOS Safari keyboard fix - adjust viewport & auto-scroll
   useEffect(() => {
-    const handleResize = () => {
+    const handleViewportChange = () => {
       if (window.visualViewport) {
         const vh = window.visualViewport.height;
         document.documentElement.style.setProperty('--vh', `${vh}px`);
+        
+        // Force scroll to latest message when keyboard appears
+        setTimeout(() => {
+          messagesEndRef.current?.scrollIntoView({ 
+            behavior: 'smooth', 
+            block: 'end' 
+          });
+        }, 100);
       }
     };
 
-    handleResize();
-
-    window.visualViewport?.addEventListener('resize', handleResize);
-    window.visualViewport?.addEventListener('scroll', handleResize);
+    handleViewportChange();
+    window.visualViewport?.addEventListener('resize', handleViewportChange);
+    window.visualViewport?.addEventListener('scroll', handleViewportChange);
 
     return () => {
-      window.visualViewport?.removeEventListener('resize', handleResize);
-      window.visualViewport?.removeEventListener('scroll', handleResize);
+      window.visualViewport?.removeEventListener('resize', handleViewportChange);
+      window.visualViewport?.removeEventListener('scroll', handleViewportChange);
     };
   }, []);
   // Function untuk extract CV content dari message AI
@@ -219,7 +226,7 @@ const inputRef = useRef<HTMLTextAreaElement>(null);
   return (
     <div className="flex flex-col bg-gradient-to-br from-indigo-50 via-white to-pink-50" style={{ height: 'var(--vh, 100dvh)' }}>
       {/* HEADER */}
-      <header className=" flex-shrink-0 bg-white/80 backdrop-blur-md border-b border-gray-200">
+      <header className=" flex-shrink-0 bg-white/80 backdrop-blur-md border-b border-gray-200 transition-all">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
           <Link
             href="/"
