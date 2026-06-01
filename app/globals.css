@@ -24,7 +24,7 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
-/* Mobile-safe full height (handles keyboard properly on phones) */
+  /* Mobile-safe full height (handles keyboard properly on phones) */
 .h-screen-safe {
   height: 100vh;
   height: 100dvh;

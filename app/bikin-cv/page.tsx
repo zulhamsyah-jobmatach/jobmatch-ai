@@ -308,16 +308,22 @@ const inputRef = useRef<HTMLTextAreaElement>(null);
         <div className="max-w-3xl mx-auto px-4 py-3">
           <div className="flex items-end gap-2 bg-gray-50 rounded-2xl p-2 border border-gray-200 focus-within:border-indigo-400 focus-within:bg-white transition">
             <textarea
-            ref={inputRef}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder={cvContent ? 'CV udah jadi! Mau revisi? Ketik di sini...' : 'Ketik jawaban kamu di sini...'}
-              rows={1}
-              disabled={isLoading}
-              className="flex-1 bg-transparent resize-none outline-none px-2 py-2 text-sm text-gray-800 max-h-32 disabled:opacity-50"
-              style={{ minHeight: '40px' }}
-            />
+                ref={inputRef}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                onFocus={() => {
+                  setTimeout(() => {
+                    inputRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                  }, 350);
+                }}
+                placeholder={cvContent ? 'CV udah jadi! Mau revisi? Ketik di sini...' : 'Ketik jawaban kamu di sini...'}
+                rows={1}
+                disabled={isLoading}
+                className="flex-1 bg-transparent resize-none outline-none px-2 py-2 text-sm text-gray-800 max-h-32 disabled:opacity-50"
+                style={{ minHeight: '40px' }}
+              />
             <button
               onClick={handleSend}
               disabled={!input.trim() || isLoading}
